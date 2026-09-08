@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brain &amp; Mind Academy • USCC 8 - The Real Number System</title>
+
+  <!-- MathJax v3 Configuration & Loader -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+  <style>
+    :root {
+      --navy-dark: #0c4a6e;
+      --brand-blue: #0284c7;
+      --accent-cyan: #0ea5e9;
+      --bg-tint: #f0f9ff;
+      --card-surf: #ffffff;
+      --border-accent: #7dd3fc;
+      --border-soft: #bae6fd;
+      --green-ok: #059669;
+      --green-surf: #d1fae5;
+      --red-fail: #dc2626;
+      --red-surf: #fee2e2;
+      --brand-gold: #f59e0b;
+      --gold-dark: #d97706;
+      --gold-surf: #fef3c7;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-tint);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--navy-dark);
+      color: #fff;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(12, 74, 110, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-badge {
+      width: 46px;
+      height: 46px;
+      background: #ffffff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .brand-title h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-title p {
+      font-size: 0.78rem;
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chip {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--border-accent);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-icon {
+      background: transparent;
+      border: 1px solid var(--border-accent);
+      color: #fff;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    nav {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-soft);
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 16px;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      outline: none;
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    nav button.active {
+      background: var(--bg-tint);
+      color: var(--brand-blue);
+      border-bottom: 3px solid var(--brand-blue);
+    }
+
+    main {
+      flex: 1;
+      padding: 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    #loginGateView {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(12, 74, 110, 0.88);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-box {
+      background: #fff;
+      padding: 36px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.3);
+    }
+
+    .login-box h2 {
+      font-size: 1.45rem;
+      color: var(--navy-dark);
+      margin-bottom: 6px;
+    }
+
+    .login-box p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border-soft);
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    .btn-primary {
+      background: var(--brand-blue);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--navy-dark);
+    }
+
+    .theory-card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .theory-card h3 {
+      color: var(--navy-dark);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.25rem;
+    }
+
+    .theory-intro-text {
+      color: var(--text-main);
+      line-height: 1.65;
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+    }
+
+    .compendium-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+      margin: 16px 0;
+    }
+
+    .comp-card {
+      background: #ffffff;
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 6px rgba(12, 74, 110, 0.04);
+    }
+
+    .comp-card h4 {
+      color: var(--navy-dark);
+      border-bottom: 2px solid var(--border-soft);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .derivation-body {
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: var(--text-main);
+    }
+
+    .ratios-highlight-box {
+      background: #f8fafc;
+      border-left: 4px solid var(--brand-blue);
+      border-radius: 0 6px 6px 0;
+      padding: 10px 14px;
+      margin-top: 10px;
+    }
+
+    .table-container {
+      margin: 16px 0;
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border-soft);
+      background: #ffffff;
+    }
+
+    .stat-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    .stat-table th, .stat-table td {
+      border: 1px solid var(--border-soft);
+      padding: 10px 14px;
+    }
+
+    .stat-table th {
+      background: var(--bg-tint);
+      color: var(--navy-dark);
+      font-weight: 700;
+    }
+
+    .stat-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .video-callout-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .video-callout {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #f8fafc;
+      border: 1px solid var(--border-soft);
+      padding: 14px 16px;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent-cyan);
+    }
+
+    .video-callout a {
+      color: var(--brand-blue);
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 8px;
+      font-size: 0.88rem;
+    }
+
+    .sheet-grid {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 24px;
+    }
+
+    @media (max-width: 990px) {
+      .sheet-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .question-card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .concept-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .concept-tag.book {
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #7dd3fc;
+    }
+
+    .concept-tag.ka {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .svg-container {
+      display: flex;
+      justify-content: center;
+      margin: 18px 0;
+      padding: 16px;
+      background: var(--bg-tint);
+      border-radius: 8px;
+      border: 1px solid var(--border-soft);
+      overflow-x: auto;
+    }
+
+    .step-box {
+      margin-top: 16px;
+      padding: 18px;
+      border: 1px solid var(--border-soft);
+      border-radius: 8px;
+      background: #fff;
+      display: none;
+    }
+
+    .step-box.unlocked {
+      display: block;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-box.success {
+      border-color: var(--green-ok);
+      background: var(--green-surf);
+    }
+
+    .step-text-wrap {
+      font-size: 1rem;
+      line-height: 1.8;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .inline-blank {
+      width: 140px;
+      padding: 6px 10px;
+      font-size: 0.95rem;
+      border: 2px dashed var(--brand-blue);
+      border-radius: 6px;
+      outline: none;
+      background: #fff;
+      color: var(--navy-dark);
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .inline-blank:focus {
+      border-style: solid;
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 3px rgba(14,165,233,0.2);
+    }
+
+    .inline-blank:disabled {
+      border: 1px solid var(--green-ok);
+      background: #fff;
+      color: var(--green-ok);
+      cursor: not-allowed;
+    }
+
+    .btn-verify {
+      background: var(--accent-cyan);
+      color: #fff;
+      border: none;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-verify:hover {
+      background: var(--brand-blue);
+    }
+
+    .btn-reveal {
+      background: var(--brand-gold);
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-left: 6px;
+    }
+
+    .btn-reveal:hover {
+      background: var(--gold-dark);
+    }
+
+    .attempts-badge {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: #f1f5f9;
+      color: #64748b;
+      margin-left: 6px;
+    }
+
+    .nav-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-soft);
+    }
+
+    .nav-btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-nav-action {
+      background: #f8fafc;
+      border: 1px solid var(--border-accent);
+      color: var(--navy-dark);
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .btn-nav-action:hover:not(:disabled) {
+      background: var(--bg-tint);
+      border-color: var(--brand-blue);
+    }
+
+    .btn-nav-action:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-skip {
+      border-color: var(--brand-gold);
+      color: var(--gold-dark);
+      background: var(--gold-surf);
+    }
+
+    .btn-skip:hover {
+      background: #fde68a;
+    }
+
+    .palette-box {
+      background: #fff;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .palette-legend {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      margin: 8px 0 12px 0;
+      padding: 6px 8px;
+      background: var(--bg-tint);
+      border-radius: 6px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .palette-section-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 12px 0 6px 0;
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .palette-btn {
+      aspect-ratio: 1;
+      border: 1px solid var(--border-soft);
+      background: var(--bg-tint);
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      font-size: 0.82rem;
+      color: var(--navy-dark);
+    }
+
+    .palette-btn.active {
+      border: 2px solid var(--navy-dark) !important;
+      background: var(--border-accent);
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .palette-btn.completed {
+      background: var(--green-ok) !important;
+      color: #fff !important;
+      border-color: var(--green-ok) !important;
+    }
+
+    .palette-btn.skipped {
+      background: var(--brand-gold) !important;
+      color: #fff !important;
+      border-color: var(--gold-dark) !important;
+    }
+
+    .tool-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-soft);
+      margin-bottom: 12px;
+    }
+
+    .tool-tabs button {
+      flex: 1;
+      border: none;
+      background: none;
+      padding: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .tool-tabs button.active {
+      color: var(--brand-blue);
+      border-bottom: 2px solid var(--brand-blue);
+    }
+
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .keypad-btn {
+      padding: 8px 4px;
+      border: 1px solid var(--border-soft);
+      background: #fff;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .keypad-btn:hover {
+      background: var(--bg-tint);
+    }
+
+    #calcDisplay {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--border-soft);
+      border-radius: 4px;
+      font-size: 1rem;
+      text-align: right;
+      margin-bottom: 8px;
+      background: #f8fafc;
+    }
+
+    .hero-score-card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .score-badge {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--brand-blue);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--navy-dark);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 1000;
+    }
+
+    @media print {
+      header, nav, .palette-box, #toolsPanel, .btn-primary, .btn-verify, #loginGateView, .nav-toolbar {
+        display: none !important;
+      }
+      body { background: #fff; }
+      main { width: 100%; max-width: 100%; padding: 0; }
+      .sheet-grid { display: block; }
+      .view { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Brand Header -->
+  <header>
+    <div class="brand-wrap">
+      <div class="logo-badge">
+        <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+          <path d="M 20 30 Q 50 10 80 30" stroke="#f59e0b" stroke-width="8" stroke-linecap="round"/>
+          <path d="M 26 40 Q 50 22 74 40" stroke="#f59e0b" stroke-width="8" stroke-linecap="round"/>
+          <path d="M 32 50 Q 50 36 68 50" stroke="#f59e0b" stroke-width="7" stroke-linecap="round"/>
+          <path d="M 18 80 Q 50 68 50 82 Q 50 68 82 80 L 82 52 Q 50 42 50 56 Q 50 42 18 52 Z" fill="#ffffff" stroke="#334155" stroke-width="7" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="brand-title">
+        <h1>Brain &amp; Mind Academy</h1>
+        <p>B&amp;M – The Experts • USCC 8 (The Real Number System &amp; Approximating Irrationals)</p>
+      </div>
+    </div>
+    <div class="header-controls">
+      <div class="chip" id="timerChip">⏱️ 00:00</div>
+      <div class="chip" id="userPill">Roll No: Guest</div>
+      <button class="btn-icon" id="audioToggleBtn" title="Toggle Audio">🔊</button>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <button class="tab-btn active" onclick="switchView('theoryView')">📖 Theory &amp; Strategy Guide</button>
+    <button class="tab-btn" onclick="switchView('sheetView')">✍️ Interactive Practice Sheet</button>
+    <button class="tab-btn" onclick="switchView('solutionsView')">📋 Complete Solutions</button>
+  </nav>
+
+  <!-- Login Gate Modal -->
+  <div id="loginGateView">
+    <div class="login-box">
+      <h2>USCC 8 Portal</h2>
+      <p>Grade 8 Mathematics — Representing Square Roots &amp; Approximating Irrationals</p>
+      <input type="text" id="rollInput" placeholder="Enter Student ID / Roll No" />
+      <input type="password" id="passInput" placeholder="Passcode (Optional)" />
+      <button class="btn-primary" onclick="initDirectLogin()">Initialize Workspace</button>
+    </div>
+  </div>
+
+  <main>
+    <!-- View 1: Theory & Strategy Guide -->
+    <div id="theoryView" class="view active">
+      <div class="theory-card">
+        <h3>📐 Theory Compendium: Approximating Square Roots &amp; Irrational Numbers</h3>
+        <p class="theory-intro-text">
+          An irrational number is a non-terminating, non-repeating real number. Because square roots of non-perfect squares cannot be written as exact fractions, we use <strong>rational approximations</strong> by bracketing them between consecutive integers and successive decimal tenths.
+        </p>
+
+        <div class="compendium-grid">
+          <!-- 1. The Integer Bracket Method -->
+          <div class="comp-card">
+            <h4>1. Integer Bracketing for Square Roots</h4>
+            <div class="derivation-body">
+              <p>To find the whole numbers between which \(\sqrt{N}\) lies, find consecutive integer perfect squares \(a^2\) and \((a+1)^2\) such that:</p>
+              \[a^2 < N < (a+1)^2 \implies a < \sqrt{N} < a+1\]
+              <div class="ratios-highlight-box">
+                <strong>Example:</strong> For \(\sqrt{46}\):
+                \[36 < 46 < 49 \implies 6^2 < 46 < 7^2 \implies 6 < \sqrt{46} < 7\]
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Approximating to the Nearest Tenth -->
+          <div class="comp-card">
+            <h4>2. Refining Approximations to the Nearest Tenth</h4>
+            <div class="derivation-body">
+              <p>Test tenths between \(a\) and \(a+1\) by squaring decimal tenths:</p>
+              <ul style="margin-left:18px; font-size:0.88rem; line-height:1.6;">
+                <li>Compare distance to the bounds: \(46\) is closer to \(49\) than \(36\).</li>
+                <li>Test \(6.7^2 = 44.89\), \(6.8^2 = 46.24\).</li>
+                <li>Since \(46.24\) is only \(0.24\) away from \(46\), \(\sqrt{46} \approx 6.8\).</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 3. Negative Square Roots & Number Line Positioning -->
+          <div class="comp-card">
+            <h4>3. Negative Radicals on the Number Line</h4>
+            <div class="derivation-body">
+              <p>The negative square root \(-\sqrt{N}\) is the reflection across zero of \(\sqrt{N}\):</p>
+              \[a < \sqrt{N} < b \implies -b < -\sqrt{N} < -a\]
+              <div class="ratios-highlight-box">
+                <strong>Example:</strong> For \(-\sqrt{14}\):
+                \[9 < 14 < 16 \implies 3 < \sqrt{14} < 4 \implies -4 < -\sqrt{14} < -3\]
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Comparing and Ordering Real Numbers -->
+          <div class="comp-card">
+            <h4>4. Comparing and Ordering Real Numbers</h4>
+            <div class="derivation-body">
+              <p>To compare radicals with integers or algebraic constants (\(\pi \approx 3.14159\), \(\pi^2 \approx 9.87\)):</p>
+              <ul style="margin-left:18px; font-size:0.88rem; line-height:1.6;">
+                <li><strong>Method 1 (Squaring):</strong> To compare \(\sqrt{29}\) and \(5.4\), square both: \((\sqrt{29})^2 = 29\), \(5.4^2 = 29.16\). Since \(29 < 29.16\), \(\sqrt{29} < 5.4\).</li>
+                <li><strong>Method 2 (Area Inversion):</strong> For square of area \(A = 97\text{ cm}^2\), side \(s = \sqrt{97} \approx 9.849\text{ cm}\).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Callouts Card -->
+      <div class="theory-card">
+        <h3>📹 Curated Master Video Lectures (Khan Academy)</h3>
+        <div class="video-callout-grid">
+          <div class="video-callout">
+            <strong>Approximating Square Roots (Part 1)</strong>
+            <p>Techniques for bracketing irrational radicals between consecutive whole numbers.</p>
+            <a href="https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations/cc-8th-approximating-irrational-numbers/v/approximating-square-roots" target="_blank">Watch on Khan Academy →</a>
+          </div>
+          <div class="video-callout">
+            <strong>Approximating Square Roots (Part 2)</strong>
+            <p>Refining radical values to the nearest decimal tenth using mental squaring.</p>
+            <a href="https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations/cc-8th-approximating-irrational-numbers/v/approximating-square-roots-2" target="_blank">Watch on Khan Academy →</a>
+          </div>
+          <div class="video-callout">
+            <strong>Sorting Numbers with Radicals</strong>
+            <p>Comparing and sorting lists containing square roots, integers, and multiples of pi.</p>
+            <a href="https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations/cc-8th-approximating-irrational-numbers/v/sorting-irrational-numbers-involving-radicals" target="_blank">Watch on Khan Academy →</a>
+          </div>
+          <div class="video-callout">
+            <strong>Comparing Values with a Calculator</strong>
+            <p>Evaluating multi-decimal places and verifying number line intervals.</p>
+            <a href="https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations/cc-8th-approximating-irrational-numbers/v/comparing-values-with-calculator" target="_blank">Watch on Khan Academy →</a>
+          </div>
+          <div class="video-callout">
+            <strong>Square Roots 2 Practice</strong>
+            <p>Interactive exercises for calculating and estimating higher radicals.</p>
+            <a href="https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations/cc-8th-approximating-irrational-numbers/e/square_roots_2" target="_blank">Practice on Khan Academy →</a>
+          </div>
+          <div class="video-callout">
+            <strong>Approximating Irrational Numbers Exercise</strong>
+            <p>Khan Academy skill challenge on locating and estimating irrational positions.</p>
+            <a href="https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations/cc-8th-approximating-irrational-numbers/e/approximating-irrational-numbers" target="_blank">Practice on Khan Academy →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View 2: Interactive Practice Sheet -->
+    <div id="sheetView" class="view">
+      <div class="sheet-grid">
+        <div class="question-card" id="activeQuestionCard"></div>
+
+        <aside>
+          <div class="palette-box">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h4>Question Palette</h4>
+              <span style="font-size:0.8rem; color:var(--text-muted);" id="paletteCount">0 / 33</span>
+            </div>
+
+            <div class="palette-legend">
+              <div class="legend-item"><span class="legend-dot" style="background:#059669;"></span> Done</div>
+              <div class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span> Skipped</div>
+              <div class="legend-item"><span class="legend-dot" style="background:#7dd3fc;"></span> Active</div>
+              <div class="legend-item"><span class="legend-dot" style="background:#f0f9ff; border:1px solid #bae6fd;"></span> Unseen</div>
+            </div>
+            
+            <div class="palette-section-title">Practice 1 Textbook (Q1 – Q26)</div>
+            <div class="palette-grid" id="paletteSecAGrid"></div>
+
+            <div class="palette-section-title">Khan Academy Skill Bank (Q27 – Q33)</div>
+            <div class="palette-grid" id="paletteSecBGrid"></div>
+          </div>
+
+          <div class="palette-box" id="toolsPanel">
+            <div class="tool-tabs">
+              <button id="tabKeypadBtn" class="active" onclick="toggleTool('keypad')">Math Keypad</button>
+              <button id="tabCalcBtn" onclick="toggleTool('calc')">Calculator</button>
+            </div>
+
+            <div id="toolKeypad">
+              <div class="keypad-grid">
+                <button class="keypad-btn" onclick="insertSymbol('√')">√</button>
+                <button class="keypad-btn" onclick="insertSymbol('π')">π</button>
+                <button class="keypad-btn" onclick="insertSymbol('/')">/</button>
+                <button class="keypad-btn" onclick="insertSymbol('-')">-</button>
+                <button class="keypad-btn" onclick="insertSymbol('.')">.</button>
+                <button class="keypad-btn" onclick="insertSymbol(',')">,</button>
+                <button class="keypad-btn" onclick="insertSymbol('<')">&lt;</button>
+                <button class="keypad-btn" onclick="insertSymbol('>')">&gt;</button>
+                <button class="keypad-btn" onclick="insertSymbol('Yes')">Yes</button>
+                <button class="keypad-btn" onclick="insertSymbol('No')">No</button>
+                <button class="keypad-btn" onclick="insertSymbol('Rational')">Rational</button>
+                <button class="keypad-btn" onclick="insertSymbol('Irrational')">Irrational</button>
+              </div>
+            </div>
+
+            <div id="toolCalc" style="display: none;">
+              <input type="text" id="calcDisplay" readonly value="" />
+              <div class="keypad-grid">
+                <button class="keypad-btn" onclick="pressCalc('7')">7</button>
+                <button class="keypad-btn" onclick="pressCalc('8')">8</button>
+                <button class="keypad-btn" onclick="pressCalc('9')">9</button>
+                <button class="keypad-btn" onclick="pressCalc('/')">/</button>
+                <button class="keypad-btn" onclick="pressCalc('4')">4</button>
+                <button class="keypad-btn" onclick="pressCalc('5')">5</button>
+                <button class="keypad-btn" onclick="pressCalc('6')">6</button>
+                <button class="keypad-btn" onclick="pressCalc('*')">*</button>
+                <button class="keypad-btn" onclick="pressCalc('1')">1</button>
+                <button class="keypad-btn" onclick="pressCalc('2')">2</button>
+                <button class="keypad-btn" onclick="pressCalc('3')">3</button>
+                <button class="keypad-btn" onclick="pressCalc('-')">-</button>
+                <button class="keypad-btn" onclick="pressCalc('0')">0</button>
+                <button class="keypad-btn" onclick="pressCalc('.')">.</button>
+                <button class="keypad-btn" onclick="calcEval()">=</button>
+                <button class="keypad-btn" onclick="pressCalc('+')">+</button>
+                <button class="keypad-btn" style="grid-column: span 2;" onclick="calcClear()">C</button>
+                <button class="keypad-btn" style="grid-column: span 2;" onclick="calcSqrt()">√</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- View 3: Complete Solutions -->
+    <div id="solutionsView" class="view">
+      <div class="hero-score-card">
+        <h2>Chapter Performance Report</h2>
+        <div class="score-badge" id="scoreValue">0 / 33</div>
+        <p id="scoreSubtitle">Complete active questions to review your diagnostic analysis.</p>
+        <button class="btn-primary" style="margin-top: 14px; max-width: 200px;" onclick="window.print()">🖨️ Print Solutions</button>
+      </div>
+      <div id="completeSolutionsContainer"></div>
+    </div>
+  </main>
+
+  <div class="toast" id="toastMessage"></div>
+
+  <script>
+    // --- Master 33-Question Dataset: Textbook (Q1-Q26) + Khan Academy 7-Problem Skill Bank (Q27-Q33) ---
+    const CHAPTER_QUESTIONS = [
+      // Textbook Part 1: Non-perfect squares & Irrationals (Q1 - Q8)
+      {
+        id: 1,
+        concept: "book",
+        source: "Practice 1, Q1",
+        title: "Determine Non-Perfect Square: 33",
+        prompt: "Determine if 33 is a non-perfect square number.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="10" fill="#0c4a6e">25 < 33 < 36</text></svg>`,
+        steps: [
+          { prefix: "Step 1: 33 lies between 5² = 25 and 6² = 36. Is 33 a non-perfect square? (Yes/No):", expected: "yes", suffix: ".", explanation: "Since 33 is not the square of any integer, it is a non-perfect square." }
+        ]
+      },
+      {
+        id: 2,
+        concept: "book",
+        source: "Practice 1, Q2",
+        title: "Determine Non-Perfect Square: 576",
+        prompt: "Determine if 576 is a non-perfect square number.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="10" fill="#059669">24 × 24 = 576</text></svg>`,
+        steps: [
+          { prefix: "Step 1: 24² = 576. Is 576 a non-perfect square? (Yes/No):", expected: "no", suffix: ".", explanation: "576 is a perfect square (24² = 576). It is not a non-perfect square." }
+        ]
+      },
+      {
+        id: 3,
+        concept: "book",
+        source: "Practice 1, Q3",
+        title: "Determine Non-Perfect Square: 1835",
+        prompt: "Determine if 1835 is a non-perfect square number.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="25" y="35" font-size="9" fill="#0c4a6e">Ends in 35 (Never square)</text></svg>`,
+        steps: [
+          { prefix: "Step 1: A square ending in 5 must end in 25. Is 1835 a non-perfect square? (Yes/No):", expected: "yes", suffix: ".", explanation: "1835 lies between 42² = 1764 and 43² = 1849; it is non-perfect." }
+        ]
+      },
+      {
+        id: 4,
+        concept: "book",
+        source: "Practice 1, Q4",
+        title: "Determine Non-Perfect Square: 1369",
+        prompt: "Determine if 1369 is a non-perfect square number.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="10" fill="#059669">37 × 37 = 1369</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since 37² = 1369, is 1369 a non-perfect square? (Yes/No):", expected: "no", suffix: ".", explanation: "1369 is a perfect square (37² = 1369)." }
+        ]
+      },
+      {
+        id: 5,
+        concept: "book",
+        source: "Practice 1, Q5",
+        title: "Determine Irrational Number: 3.142",
+        prompt: "Determine whether 3.142 is an irrational number.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="25" y="35" font-size="9" fill="#0c4a6e">3.142 = 3142 / 1000</text></svg>`,
+        steps: [
+          { prefix: "Step 1: 3.142 is a terminating decimal (3142/1000). Is it irrational? (Yes/No):", expected: "no", suffix: ".", explanation: "Terminating decimals are rational numbers." }
+        ]
+      },
+      {
+        id: 6,
+        concept: "book",
+        source: "Practice 1, Q6",
+        title: "Determine Irrational Number: π / 2",
+        prompt: "Determine whether \\(\\frac{\\pi}{2}\\) is an irrational number.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="50" y="35" font-size="12" fill="#0c4a6e">π / 2</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since \\(\\pi\\) is irrational, dividing by 2 leaves it irrational. Is it irrational? (Yes/No):", expected: "yes", suffix: ".", explanation: "\\(\\pi/2\\) is non-terminating and non-repeating." }
+        ]
+      },
+      {
+        id: 7,
+        concept: "book",
+        source: "Practice 1, Q7",
+        title: "Determine Irrational Number: √289",
+        prompt: "Determine whether \\(\\sqrt{289}\\) is an irrational number.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="45" y="35" font-size="11" fill="#059669">√289 = 17</text></svg>`,
+        steps: [
+          { prefix: "Step 1: \\(\\sqrt{289} = 17\\). Is 17 an irrational number? (Yes/No):", expected: "no", suffix: ".", explanation: "17 is an integer, so it is rational." }
+        ]
+      },
+      {
+        id: 8,
+        concept: "book",
+        source: "Practice 1, Q8",
+        title: "Determine Irrational Number: √200",
+        prompt: "Determine whether \\(\\sqrt{200}\\) is an irrational number.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="10" fill="#0c4a6e">√200 = 10√2</text></svg>`,
+        steps: [
+          { prefix: "Step 1: 200 is not a perfect square (\\(10\\sqrt{2}\\)). Is \\(\\sqrt{200}\\) an irrational number? (Yes/No):", expected: "yes", suffix: ".", explanation: "The square root of a non-perfect square is irrational." }
+        ]
+      },
+
+      // Textbook Part 2: Positive square roots bracketing (Q9 - Q14)
+      {
+        id: 9,
+        concept: "book",
+        source: "Practice 1, Q9",
+        title: "Locate on Number Line: √8",
+        prompt: "Locate \\(\\sqrt{8}\\) on the number line using rational approximations. First tell which two whole numbers the square root is between.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="10" fill="#0c4a6e">4 < 8 < 9</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since 2² = 4 and 3² = 9, \\(\\sqrt{8}\\) lies between whole numbers 2 and", expected: "3", suffix: ".", explanation: "\\[2 < \\sqrt{8} < 3\\]" },
+          { prefix: "Step 2: Approximate to one decimal place (nearest tenth):", expected: "2.8", suffix: ".", explanation: "\\[2.8^2 = 7.84 \\implies \\sqrt{8} \\approx 2.8\\]" }
+        ]
+      },
+      {
+        id: 10,
+        concept: "book",
+        source: "Practice 1, Q10",
+        title: "Locate on Number Line: √10",
+        prompt: "Locate \\(\\sqrt{10}\\) on the number line using rational approximations. First tell which two whole numbers the square root is between.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="10" fill="#0c4a6e">9 < 10 < 16</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since 3² = 9 and 4² = 16, \\(\\sqrt{10}\\) is between whole numbers 3 and", expected: "4", suffix: ".", explanation: "\\[3 < \\sqrt{10} < 4\\]" },
+          { prefix: "Step 2: Approximate to one decimal place (nearest tenth):", expected: "3.2", suffix: ".", explanation: "\\[3.2^2 = 10.24 \\implies \\sqrt{10} \\approx 3.2\\]" }
+        ]
+      },
+      {
+        id: 11,
+        concept: "book",
+        source: "Practice 1, Q11",
+        title: "Locate on Number Line: √21",
+        prompt: "Locate \\(\\sqrt{21}\\) on the number line using rational approximations. First tell which two whole numbers the square root is between.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="10" fill="#0c4a6e">16 < 21 < 25</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since 4² = 16 and 5² = 25, \\(\\sqrt{21}\\) is between whole numbers 4 and", expected: "5", suffix: ".", explanation: "\\[4 < \\sqrt{21} < 5\\]" },
+          { prefix: "Step 2: Approximate to one decimal place (nearest tenth):", expected: "4.6", suffix: ".", explanation: "\\[4.6^2 = 21.16 \\implies \\sqrt{21} \\approx 4.6\\]" }
+        ]
+      },
+      {
+        id: 12,
+        concept: "book",
+        source: "Practice 1, Q12",
+        title: "Locate on Number Line: √37",
+        prompt: "Locate \\(\\sqrt{37}\\) on the number line using rational approximations. First tell which two whole numbers the square root is between.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="10" fill="#0c4a6e">36 < 37 < 49</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since 6² = 36 and 7² = 49, \\(\\sqrt{37}\\) is between whole numbers 6 and", expected: "7", suffix: ".", explanation: "\\[6 < \\sqrt{37} < 7\\]" },
+          { prefix: "Step 2: Approximate to one decimal place (nearest tenth):", expected: "6.1", suffix: ".", explanation: "\\[6.1^2 = 37.21 \\implies \\sqrt{37} \\approx 6.1\\]" }
+        ]
+      },
+      {
+        id: 13,
+        concept: "book",
+        source: "Practice 1, Q13",
+        title: "Locate on Number Line: √46",
+        prompt: "Locate \\(\\sqrt{46}\\) on the number line using rational approximations. First tell which two whole numbers the square root is between.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="10" fill="#0c4a6e">36 < 46 < 49</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since 6² = 36 and 7² = 49, \\(\\sqrt{46}\\) is between whole numbers 6 and", expected: "7", suffix: ".", explanation: "\\[6 < \\sqrt{46} < 7\\]" },
+          { prefix: "Step 2: Approximate to one decimal place (nearest tenth):", expected: "6.8", suffix: ".", explanation: "\\[6.8^2 = 46.24 \\implies \\sqrt{46} \\approx 6.8\\]" }
+        ]
+      },
+      {
+        id: 14,
+        concept: "book",
+        source: "Practice 1, Q14",
+        title: "Locate on Number Line: √55",
+        prompt: "Locate \\(\\sqrt{55}\\) on the number line using rational approximations. First tell which two whole numbers the square root is between.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="10" fill="#0c4a6e">49 < 55 < 64</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since 7² = 49 and 8² = 64, \\(\\sqrt{55}\\) is between whole numbers 7 and", expected: "8", suffix: ".", explanation: "\\[7 < \\sqrt{55} < 8\\]" },
+          { prefix: "Step 2: Approximate to one decimal place (nearest tenth):", expected: "7.4", suffix: ".", explanation: "\\[7.4^2 = 54.76 \\implies \\sqrt{55} \\approx 7.4\\]" }
+        ]
+      },
+
+      // Textbook Part 3: Negative square roots bracketing (Q15 - Q20)
+      {
+        id: 15,
+        concept: "book",
+        source: "Practice 1, Q15",
+        title: "Locate Negative Radical: -√8",
+        prompt: "Locate \\(-\\sqrt{8}\\) on the number line using rational approximations. First tell which two integers the square root is between.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="25" y="35" font-size="9" fill="#0c4a6e">-3 < -√8 < -2</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since \\(2 < \\sqrt{8} < 3\\), \\(-\\sqrt{8}\\) is between integers -3 and", expected: "-2", suffix: ".", explanation: "\\[-3 < -\\sqrt{8} < -2\\]" },
+          { prefix: "Step 2: Rational approximation to one decimal place is", expected: "-2.8", suffix: ".", explanation: "\\[-\\sqrt{8} \\approx -2.8\\]" }
+        ]
+      },
+      {
+        id: 16,
+        concept: "book",
+        source: "Practice 1, Q16",
+        title: "Locate Negative Radical: -√14",
+        prompt: "Locate \\(-\\sqrt{14}\\) on the number line using rational approximations. First tell which two integers the square root is between.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="25" y="35" font-size="9" fill="#0c4a6e">-4 < -√14 < -3</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since \\(3 < \\sqrt{14} < 4\\), \\(-\\sqrt{14}\\) is between integers -4 and", expected: "-3", suffix: ".", explanation: "\\[-4 < -\\sqrt{14} < -3\\]" },
+          { prefix: "Step 2: Rational approximation to one decimal place is", expected: "-3.7", suffix: ".", explanation: "\\[-\\sqrt{14} \\approx -3.7\\]" }
+        ]
+      },
+      {
+        id: 17,
+        concept: "book",
+        source: "Practice 1, Q17",
+        title: "Locate Negative Radical: -√27",
+        prompt: "Locate \\(-\\sqrt{27}\\) on the number line. First tell which two integers it is between.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="25" y="35" font-size="9" fill="#0c4a6e">-6 < -√27 < -5</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since 25 < 27 < 36, \\(-\\sqrt{27}\\) is between integers -6 and", expected: "-5", suffix: ".", explanation: "\\[-6 < -\\sqrt{27} < -5\\]" },
+          { prefix: "Step 2: Rational approximation to one decimal place is", expected: "-5.2", suffix: ".", explanation: "\\[-\\sqrt{27} \\approx -5.2\\]" }
+        ]
+      },
+      {
+        id: 18,
+        concept: "book",
+        source: "Practice 1, Q18",
+        title: "Locate Negative Radical: -√68",
+        prompt: "Locate \\(-\\sqrt{68}\\) on the number line. First tell which two integers it is between.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="25" y="35" font-size="9" fill="#0c4a6e">-9 < -√68 < -8</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since 64 < 68 < 81, \\(-\\sqrt{68}\\) is between integers -9 and", expected: "-8", suffix: ".", explanation: "\\[-9 < -\\sqrt{68} < -8\\]" },
+          { prefix: "Step 2: Rational approximation to one decimal place is", expected: "-8.2", suffix: ".", explanation: "\\[-\\sqrt{68} \\approx -8.2\\]" }
+        ]
+      },
+      {
+        id: 19,
+        concept: "book",
+        source: "Practice 1, Q19",
+        title: "Locate Negative Radical: -√47",
+        prompt: "Locate \\(-\\sqrt{47}\\) on the number line. First tell which two integers it is between.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="25" y="35" font-size="9" fill="#0c4a6e">-7 < -√47 < -6</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since 36 < 47 < 49, \\(-\\sqrt{47}\\) is between integers -7 and", expected: "-6", suffix: ".", explanation: "\\[-7 < -\\sqrt{47} < -6\\]" },
+          { prefix: "Step 2: Rational approximation to one decimal place is", expected: "-6.9", suffix: ".", explanation: "\\[-\\sqrt{47} \\approx -6.9\\]" }
+        ]
+      },
+      {
+        id: 20,
+        concept: "book",
+        source: "Practice 1, Q20",
+        title: "Locate Negative Radical: -√34",
+        prompt: "Locate \\(-\\sqrt{34}\\) on the number line. First tell which two integers it is between.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="25" y="35" font-size="9" fill="#0c4a6e">-6 < -√34 < -5</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Since 25 < 34 < 36, \\(-\\sqrt{34}\\) is between integers -6 and", expected: "-5", suffix: ".", explanation: "\\[-6 < -\\sqrt{34} < -5\\]" },
+          { prefix: "Step 2: Rational approximation to one decimal place is", expected: "-5.8", suffix: ".", explanation: "\\[-\\sqrt{34} \\approx -5.8\\]" }
+        ]
+      },
+
+      // Textbook Part 4: 3-decimal calculator approximations (Q21 - Q24)
+      {
+        id: 21,
+        concept: "book",
+        source: "Practice 1, Q21",
+        title: "Calculator Approximation: √51",
+        prompt: "Determine \\(\\sqrt{51}\\) to three decimal places.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="10" fill="#0c4a6e">√51 ≈ 7.141...</text></svg>`,
+        steps: [
+          { prefix: "Step 1: To three decimal places, \\(\\sqrt{51} =\\)", expected: "7.141", suffix: ".", explanation: "\\[\\sqrt{51} \\approx 7.14142... \\implies 7.141\\]" }
+        ]
+      },
+      {
+        id: 22,
+        concept: "book",
+        source: "Practice 1, Q22",
+        title: "Calculator Approximation: -√279",
+        prompt: "Determine \\(-\\sqrt{279}\\) to three decimal places.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="25" y="35" font-size="10" fill="#0c4a6e">-√279 ≈ -16.703...</text></svg>`,
+        steps: [
+          { prefix: "Step 1: To three decimal places, \\(-\\sqrt{279} =\\)", expected: "-16.703", suffix: ".", explanation: "\\[-\\sqrt{279} \\approx -16.70329... \\implies -16.703\\]" }
+        ]
+      },
+      {
+        id: 23,
+        concept: "book",
+        source: "Practice 1, Q23",
+        title: "Calculator Approximation: √888",
+        prompt: "Determine \\(\\sqrt{888}\\) to three decimal places.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="30" y="35" font-size="10" fill="#0c4a6e">√888 ≈ 29.799...</text></svg>`,
+        steps: [
+          { prefix: "Step 1: To three decimal places, \\(\\sqrt{888} =\\)", expected: "29.799", suffix: ".", explanation: "\\[\\sqrt{888} \\approx 29.79932... \\implies 29.799\\]" }
+        ]
+      },
+      {
+        id: 24,
+        concept: "book",
+        source: "Practice 1, Q24",
+        title: "Calculator Approximation: √6655",
+        prompt: "Determine \\(\\sqrt{6655}\\) to three decimal places.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="25" y="35" font-size="10" fill="#0c4a6e">√6655 ≈ 81.578...</text></svg>`,
+        steps: [
+          { prefix: "Step 1: To three decimal places, \\(\\sqrt{6655} =\\)", expected: "81.578", suffix: ".", explanation: "\\[\\sqrt{6655} \\approx 81.57818... \\implies 81.578\\]" }
+        ]
+      },
+
+      // Textbook Part 5: Applications (Q25 - Q26)
+      {
+        id: 25,
+        concept: "book",
+        source: "Practice 1, Q25",
+        title: "Locate Constant π² on the Number Line",
+        prompt: "Locate the value of constant \\(\\pi^2\\) on the number line using rational approximations.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="10" fill="#0c4a6e">π² ≈ 3.14159²</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Between which two whole numbers does \\(\\pi^2\\) lie? 9 and", expected: "10", suffix: ".", explanation: "\\[3.14159^2 \\approx 9.8696 \\implies 9 < \\pi^2 < 10\\]" },
+          { prefix: "Step 2: Approximate \\(\\pi^2\\) to one decimal place:", expected: "9.9", suffix: ".", explanation: "\\[9.8696 \\approx 9.9\\]" }
+        ]
+      },
+      {
+        id: 26,
+        concept: "book",
+        source: "Practice 1, Q26",
+        title: "Square Area to Side Length: 97 cm²",
+        prompt: "The area of a square is 97 cm². Write the length of each side as an irrational number, and approximate to 3 decimal places.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><rect x="55" y="10" width="40" height="40" fill="#f0f9ff" stroke="#0c4a6e" stroke-width="1.5"/><text x="63" y="34" font-size="8">97 cm²</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Express the side length as an exact radical (e.g. √97):", expected: "√97", suffix: "cm.", explanation: "\\[s = \\sqrt{97}\\text{ cm}\\]" },
+          { prefix: "Step 2: Approximate side length to 3 decimal places:", expected: "9.849", suffix: "cm.", explanation: "\\[\\sqrt{97} \\approx 9.84885... \\implies 9.849\\text{ cm}\\]" }
+        ]
+      },
+
+      // ========== SECTION B: KHAN ACADEMY 7-PROBLEM SKILL BENCHMARK (Q27 - Q33) ==========
+      {
+        id: 27,
+        concept: "ka",
+        source: "Khan Skill Q1",
+        title: "Estimate Square Root to Nearest Tenth: √14",
+        prompt: "Estimate the value of \\(\\sqrt{14}\\) to the nearest tenth without a calculator.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="30" y="35" font-size="9" fill="#b45309">3.7² = 13.69 | 3.8² = 14.44</text></svg>`,
+        steps: [
+          { prefix: "Step 1: 3.7² = 13.69 and 3.8² = 14.44. Which tenth is closest to 14?", expected: "3.7", suffix: ".", explanation: "\\[14 - 13.69 = 0.31, \\quad 14.44 - 14 = 0.44 \\implies 3.7\\text{ is closer}\\]" }
+        ]
+      },
+      {
+        id: 28,
+        concept: "ka",
+        source: "Khan Skill Q2",
+        title: "Compare Irrational and Decimal: √29 vs 5.4",
+        prompt: "Which is greater: \\(\\sqrt{29}\\) or \\(5.4\\)? Enter '<' or '>'.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="9" fill="#b45309">5.4² = 29.16 vs 29</text></svg>`,
+        steps: [
+          { prefix: "Step 1: Square both numbers: (√29)² = 29, and 5.4² =", expected: "29.16", suffix: ".", explanation: "\\[5.4^2 = 29.16\\]" },
+          { prefix: "Step 2: Enter inequality symbol (< or >) for: \\(\\sqrt{29}\\) [ ? ] \\(5.4\\):", expected: "<", suffix: ".", explanation: "\\[29 < 29.16 \\implies \\sqrt{29} < 5.4\\]" }
+        ]
+      },
+      {
+        id: 29,
+        concept: "ka",
+        source: "Khan Skill Q3",
+        title: "Number Line Point Selection: √75",
+        prompt: "Which decimal value best represents the position of \\(\\sqrt{75}\\) on a number line: 8.2, 8.7, or 9.1?",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="30" y="35" font-size="9" fill="#b45309">8.6² = 73.96 | 8.7² = 75.69</text></svg>`,
+        steps: [
+          { prefix: "Step 1: 8² = 64 and 9² = 81. Since 75 is much closer to 81, the best choice is", expected: "8.7", suffix: ".", explanation: "\\[8.7^2 = 75.69 \\approx 75\\]" }
+        ]
+      },
+      {
+        id: 30,
+        concept: "ka",
+        source: "Khan Skill Q4",
+        title: "Estimate Square Root to Nearest Tenth: √60",
+        prompt: "Estimate the value of \\(\\sqrt{60}\\) to the nearest tenth.",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="30" y="35" font-size="9" fill="#b45309">7.7² = 59.29 | 7.8² = 60.84</text></svg>`,
+        steps: [
+          { prefix: "Step 1: 7.7² = 59.29 (diff 0.71) and 7.8² = 60.84 (diff 0.84). The nearest tenth is", expected: "7.7", suffix: ".", explanation: "\\[\\sqrt{60} \\approx 7.7\\]" }
+        ]
+      },
+      {
+        id: 31,
+        concept: "ka",
+        source: "Khan Skill Q5",
+        title: "Ordering Real Numbers: √80, 9, 3π",
+        prompt: "Order from least to greatest: \\(\\sqrt{80}\\), \\(9\\), and \\(3\\pi\\). Which number is the smallest?",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="25" y="35" font-size="8" fill="#b45309">√80 ≈ 8.94 | 9 | 3π ≈ 9.42</text></svg>`,
+        steps: [
+          { prefix: "Step 1: \\(\\sqrt{80} < \\sqrt{81} = 9\\), and \\(3\\pi \\approx 9.42\\). Enter the smallest number (√80, 9, or 3π):", expected: "√80", suffix: ".", explanation: "\\[\\sqrt{80} \\approx 8.944 < 9 < 3\\pi \\approx 9.425\\]" },
+          { prefix: "Step 2: Enter the largest number (√80, 9, or 3π):", expected: "3π", suffix: ".", explanation: "\\[3\\pi \\approx 9.425\\]" }
+        ]
+      },
+      {
+        id: 32,
+        concept: "ka",
+        source: "Khan Skill Q6",
+        title: "Nearest Integer to an Irrational: √18",
+        prompt: "Which whole number is \\(\\sqrt{18}\\) closest to: 4 or 5?",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="35" y="35" font-size="9" fill="#b45309">4² = 16 vs 5² = 25</text></svg>`,
+        steps: [
+          { prefix: "Step 1: 18 is 2 away from 16, and 7 away from 25. The closest whole number is", expected: "4", suffix: ".", explanation: "\\[18 - 16 = 2, \\quad 25 - 18 = 7 \\implies 4\\text{ is closest}\\]" }
+        ]
+      },
+      {
+        id: 33,
+        concept: "ka",
+        source: "Khan Skill Q7",
+        title: "Bounds and Approximation: √105",
+        prompt: "Between which two consecutive integers does \\(\\sqrt{105}\\) lie, and what is its value to the nearest tenth?",
+        svg: `<svg width="220" height="90" viewBox="0 0 160 60"><text x="30" y="35" font-size="9" fill="#b45309">100 < 105 < 121</text></svg>`,
+        steps: [
+          { prefix: "Step 1: 10² = 100 and 11² = 121. \\(\\sqrt{105}\\) lies between 10 and", expected: "11", suffix: ".", explanation: "\\[10 < \\sqrt{105} < 11\\]" },
+          { prefix: "Step 2: Since 10.2² = 104.04 and 10.3² = 106.09, nearest tenth is", expected: "10.2", suffix: ".", explanation: "\\[\\sqrt{105} \\approx 10.2\\]" }
+        ]
+      }
+    ];
+
+    let currentAuthUser = null;
+    let currentQuestionIndex = 0;
+    let stepProgress = CHAPTER_QUESTIONS.map(() => ({ completedSteps: 0, status: "unseen" }));
+    let stepAttempts = {};
+    let audioMuted = false;
+    let totalSeconds = 0;
+    let timerInterval = null;
+    let activeInputRef = null;
+
+    const AudioEngine = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+      },
+      playTone(freq, type, duration, delay = 0) {
+        if (audioMuted || !this.ctx) return;
+        setTimeout(() => {
+          try {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+            gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start();
+            osc.stop(this.ctx.currentTime + duration);
+          } catch (e) {
+            console.warn("Audio error", e);
+          }
+        }, delay * 1000);
+      },
+      correct() {
+        this.init();
+        this.playTone(659.25, 'sine', 0.15, 0);
+        this.playTone(880.00, 'sine', 0.25, 0.12);
+      },
+      incorrect() {
+        this.init();
+        this.playTone(196.00, 'triangle', 0.2, 0);
+        this.playTone(146.83, 'triangle', 0.3, 0.12);
+      },
+      milestone() {
+        this.init();
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          this.playTone(freq, 'sine', 0.25, idx * 0.1);
+        });
+      }
+    };
+
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        totalSeconds++;
+        const mins = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+        const secs = String(totalSeconds % 60).padStart(2, '0');
+        document.getElementById('timerChip').innerText = `⏱️ ${mins}:${secs}`;
+
+        if (totalSeconds === 1200 || (totalSeconds > 1200 && totalSeconds % 300 === 0)) {
+          AudioEngine.milestone();
+          showToast(`Pacing Check: ${Math.floor(totalSeconds / 60)} minutes elapsed.`);
+        }
+      }, 1000);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toastMessage');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3500);
+    }
+
+    function initDirectLogin() {
+      const roll = document.getElementById('rollInput').value.trim() || 'Student-08';
+      currentAuthUser = roll;
+      sessionStorage.setItem('bm_user', roll);
+      document.getElementById('userPill').innerText = `Roll No: ${roll}`;
+      document.getElementById('loginGateView').style.display = 'none';
+      AudioEngine.init();
+      startTimer();
+      renderPalettes();
+      loadQuestion(0);
+      renderSolutions();
+    }
+
+    function normalizeInput(str) {
+      return str.toLowerCase().replace(/\s+/g, '').replace(/−/g, '-').replace(/pi/g, 'π');
+    }
+
+    function parseNumeric(val) {
+      if (val.includes('/')) {
+        const parts = val.split('/');
+        return parseFloat(parts[0]) / parseFloat(parts[1]);
+      }
+      return parseFloat(val);
+    }
+
+    function checkNumericalTolerance(val1, val2) {
+      const n1 = parseNumeric(val1);
+      const n2 = parseNumeric(val2);
+      if (isNaN(n1) || isNaN(n2)) return false;
+      return Math.abs(n1 - n2) <= 0.05;
+    }
+
+    function switchView(viewId) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
+
+      const btnMap = { 'theoryView': 0, 'sheetView': 1, 'solutionsView': 2 };
+      document.querySelectorAll('nav button')[btnMap[viewId]].classList.add('active');
+
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise();
+      }
+    }
+
+    function renderPalettes() {
+      const secAGrid = document.getElementById('paletteSecAGrid');
+      const secBGrid = document.getElementById('paletteSecBGrid');
+      secAGrid.innerHTML = '';
+      secBGrid.innerHTML = '';
+
+      let doneCount = 0;
+      CHAPTER_QUESTIONS.forEach((q, idx) => {
+        const state = stepProgress[idx];
+        if (state.status === "completed") doneCount++;
+
+        const btn = document.createElement('button');
+        let stateClass = '';
+        if (idx === currentQuestionIndex) {
+          stateClass = 'active';
+        } else if (state.status === "completed") {
+          stateClass = 'completed';
+        } else if (state.status === "skipped") {
+          stateClass = 'skipped';
+        }
+
+        btn.className = `palette-btn ${stateClass}`;
+        btn.innerText = idx + 1;
+        btn.title = `${q.source}: ${q.title}`;
+        btn.onclick = () => loadQuestion(idx);
+
+        if (idx < 26) {
+          secAGrid.appendChild(btn);
+        } else {
+          secBGrid.appendChild(btn);
+        }
+      });
+      document.getElementById('paletteCount').innerText = `${doneCount} / ${CHAPTER_QUESTIONS.length}`;
+    }
+
+    function loadQuestion(idx) {
+      currentQuestionIndex = idx;
+      renderPalettes();
+      const q = CHAPTER_QUESTIONS[idx];
+      const prog = stepProgress[idx];
+
+      let stepsHtml = '';
+      q.steps.forEach((st, sIdx) => {
+        const isUnlocked = sIdx <= prog.completedSteps;
+        const isPassed = sIdx < prog.completedSteps;
+        const key = `${idx}_${sIdx}`;
+        const attempts = stepAttempts[key] || 0;
+
+        stepsHtml += `
+          <div class="step-box ${isUnlocked ? 'unlocked' : ''} ${isPassed ? 'success' : ''}" id="stepBox_${idx}_${sIdx}">
+            <div class="step-text-wrap">
+              <span>${st.prefix}</span>
+              <input type="text" class="inline-blank" id="stepInput_${idx}_${sIdx}" 
+                value="${isPassed ? st.expected : ''}" 
+                placeholder="enter answer"
+                ${isPassed ? 'disabled' : ''} 
+                onfocus="activeInputRef = this;" />
+              <span>${st.suffix}</span>
+              ${!isPassed ? `
+                <button class="btn-verify" onclick="verifyStep(${idx}, ${sIdx})">Verify</button>
+                <span class="attempts-badge">Attempts: ${attempts}/2</span>
+                ${attempts >= 2 ? `<button class="btn-reveal" onclick="autoFillStep(${idx}, ${sIdx})">Auto-Fill Correct Answer</button>` : ''}
+              ` : `<span style="color: var(--green-ok); font-weight: bold; margin-left: 8px;">✓ Verified</span>`}
+            </div>
+            ${isPassed ? `<div style="margin-top:10px; padding:10px; background:#eff6ff; border-radius:6px; border-left:4px solid var(--brand-blue); font-size:0.92rem; color:var(--text-main);">${st.explanation}</div>` : ''}
+          </div>
+        `;
+      });
+
+      const tagClass = q.concept === 'book' ? 'book' : 'ka';
+      const tagText = q.concept === 'book' ? 'Textbook Practice 1' : 'Khan Academy Skill Problem';
+
+      const prevDisabled = idx === 0 ? 'disabled' : '';
+      const nextDisabled = idx === CHAPTER_QUESTIONS.length - 1 ? 'disabled' : '';
+
+      const html = `
+        <span class="concept-tag ${tagClass}">${tagText}</span>
+        <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted); margin-left: 8px;">[${q.source}]</span>
+        <h2 style="color:var(--navy-dark); margin: 6px 0 10px 0;">Problem ${q.id}: ${q.title}</h2>
+        <p style="margin-top: 8px; line-height: 1.65;">${q.prompt}</p>
+        <div class="svg-container">${q.svg}</div>
+        <div id="stepsContainer">${stepsHtml}</div>
+
+        <!-- Action Toolbar -->
+        <div class="nav-toolbar">
+          <button class="btn-nav-action" onclick="navigateQuestion(-1)" ${prevDisabled}>
+            ⏮ Previous
+          </button>
+          <div class="nav-btn-group">
+            <button class="btn-nav-action btn-skip" onclick="skipQuestion()">
+              ⏭ Skip Question
+            </button>
+            <button class="btn-nav-action" onclick="navigateQuestion(1)" ${nextDisabled}>
+              Next ❯
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('activeQuestionCard').innerHTML = html;
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise();
+      }
+    }
+
+    function navigateQuestion(delta) {
+      const target = currentQuestionIndex + delta;
+      if (target >= 0 && target < CHAPTER_QUESTIONS.length) {
+        loadQuestion(target);
+      }
+    }
+
+    function skipQuestion() {
+      if (stepProgress[currentQuestionIndex].status !== "completed") {
+        stepProgress[currentQuestionIndex].status = "skipped";
+      }
+      showToast(`Question ${currentQuestionIndex + 1} marked as Skipped (Amber/Gold).`);
+      renderPalettes();
+      navigateQuestion(1);
+    }
+
+    function autoFillStep(qIdx, sIdx) {
+      const inputEl = document.getElementById(`stepInput_${qIdx}_${sIdx}`);
+      if (inputEl) {
+        inputEl.value = CHAPTER_QUESTIONS[qIdx].steps[sIdx].expected;
+        verifyStep(qIdx, sIdx);
+      }
+    }
+
+    function verifyStep(qIdx, sIdx) {
+      const inputEl = document.getElementById(`stepInput_${qIdx}_${sIdx}`);
+      const val = normalizeInput(inputEl.value);
+      const expected = normalizeInput(CHAPTER_QUESTIONS[qIdx].steps[sIdx].expected);
+      const key = `${qIdx}_${sIdx}`;
+
+      const isCorrect = (val === expected) || checkNumericalTolerance(val, expected);
+
+      if (isCorrect) {
+        AudioEngine.correct();
+        stepProgress[qIdx].completedSteps++;
+        if (stepProgress[qIdx].completedSteps >= CHAPTER_QUESTIONS[qIdx].steps.length) {
+          stepProgress[qIdx].status = "completed";
+          AudioEngine.milestone();
+          showToast(`Problem ${qIdx + 1} Fully Completed!`);
+        }
+        renderPalettes();
+        loadQuestion(qIdx);
+        renderSolutions();
+      } else {
+        AudioEngine.incorrect();
+        stepAttempts[key] = (stepAttempts[key] || 0) + 1;
+        inputEl.style.borderColor = "var(--red-fail)";
+        if (stepAttempts[key] >= 2) {
+          showToast(`2 attempts reached. Click 'Auto-Fill Correct Answer' to advance.`);
+        } else {
+          showToast("Incorrect value. Please check your bounds or approximation!");
+        }
+        loadQuestion(qIdx);
+      }
+    }
+
+    function renderSolutions() {
+      const container = document.getElementById('completeSolutionsContainer');
+      let completedCount = stepProgress.filter(p => p.status === "completed").length;
+      document.getElementById('scoreValue').innerText = `${completedCount} / ${CHAPTER_QUESTIONS.length}`;
+
+      let html = '';
+      let lastConcept = '';
+
+      CHAPTER_QUESTIONS.forEach((q) => {
+        if (q.concept !== lastConcept) {
+          lastConcept = q.concept;
+          const sectionHeader = q.concept === 'book' 
+            ? 'Section A: Textbook Practice 1 Full Solutions' 
+            : 'Section B: Khan Academy Approximating Irrationals Benchmark Solutions';
+          html += `<h2 style="color:var(--navy-dark); margin: 30px 0 14px 0; border-bottom: 2px solid var(--border-soft); padding-bottom: 6px;">${sectionHeader}</h2>`;
+        }
+
+        html += `
+          <div class="theory-card">
+            <span class="concept-tag ${q.concept}">${q.concept === 'book' ? 'TEXTBOOK' : 'KHAN ACADEMY'}</span>
+            <span style="font-size:0.8rem; font-weight:bold; color:var(--text-muted); margin-left:6px;">${q.source}</span>
+            <h3 style="margin-top:6px;">Problem ${q.id}: ${q.title}</h3>
+            <p>${q.prompt}</p>
+            <div class="svg-container" style="max-width: 240px; margin: 12px 0;">${q.svg}</div>
+            <div class="proof-section">
+              ${q.steps.map((st, sIdx) => `
+                <div style="background:#f8fafc; border-left:4px solid var(--brand-blue); padding:10px 14px; margin-bottom:8px; border-radius:0 6px 6px 0;">
+                  <strong>Step ${sIdx + 1}:</strong> ${st.prefix} <strong>[ ${st.expected} ]</strong> ${st.suffix}<br/>
+                  <div style="margin-top:6px;">${st.explanation}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise();
+      }
+    }
+
+    function toggleTool(tool) {
+      if (tool === 'keypad') {
+        document.getElementById('toolKeypad').style.display = 'block';
+        document.getElementById('toolCalc').style.display = 'none';
+        document.getElementById('tabKeypadBtn').classList.add('active');
+        document.getElementById('tabCalcBtn').classList.remove('active');
+      } else {
+        document.getElementById('toolKeypad').style.display = 'none';
+        document.getElementById('toolCalc').style.display = 'block';
+        document.getElementById('tabCalcBtn').classList.add('active');
+        document.getElementById('tabKeypadBtn').classList.remove('active');
+      }
+    }
+
+    function insertSymbol(sym) {
+      if (activeInputRef) {
+        activeInputRef.value += sym;
+        activeInputRef.focus();
+      }
+    }
+
+    function pressCalc(val) { document.getElementById('calcDisplay').value += val; }
+    function calcClear() { document.getElementById('calcDisplay').value = ''; }
+    function calcEval() {
+      try {
+        document.getElementById('calcDisplay').value = eval(document.getElementById('calcDisplay').value);
+      } catch (e) {
+        document.getElementById('calcDisplay').value = 'Error';
+      }
+    }
+    function calcSqrt() {
+      try {
+        document.getElementById('calcDisplay').value = Math.sqrt(parseFloat(document.getElementById('calcDisplay').value));
+      } catch (e) {
+        document.getElementById('calcDisplay').value = 'Error';
+      }
+    }
+
+    document.getElementById('audioToggleBtn').onclick = () => {
+      audioMuted = !audioMuted;
+      document.getElementById('audioToggleBtn').innerText = audioMuted ? '🔇' : '🔊';
+    };
+  </script>
+</body>
+</html>
